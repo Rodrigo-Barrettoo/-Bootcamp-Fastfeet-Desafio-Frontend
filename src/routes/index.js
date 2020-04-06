@@ -10,6 +10,7 @@ import Problems from '../pages/Problems';
 import RegisterDeliverymans from '../pages/Deliverymans/registerDeliverymans';
 import RegisterDelivery from '../pages/Delivery/registerDelivery';
 import registerRecipients from '../pages/Recipients/registerRecipients';
+import editDelivery from '../pages/Delivery/editDelivery';
 
 export default function Routes() {
   return (
@@ -31,6 +32,12 @@ export default function Routes() {
         path="/deliveries/register"
         exact
         component={RegisterDelivery}
+        isPrivate
+      />
+      <Route
+        path="/deliveries/edit/:id"
+        exact
+        component={editDelivery}
         isPrivate
       />
 

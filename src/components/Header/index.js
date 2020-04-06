@@ -1,10 +1,20 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+
+import { signOut } from '../../store/module/auth/actions';
 
 import { Container, Content, Profile } from './styles';
 import logo from '../../assets/images/logolayout.png';
 
 export default function Header() {
+  const dispatch = useDispatch();
+  const profile = useSelector(state => state.user.profile);
+
+  function hamdleSignOut() {
+    dispatch(signOut());
+  }
+
   return (
     <Container>
       <Content>
@@ -30,8 +40,10 @@ export default function Header() {
 
         <Profile>
           <div>
-            <strong>Rodrigo</strong>
-            <Link to="/">Sair do sistema</Link>
+            <strong>{profile.name}</strong>
+            <button type="button" onClick={hamdleSignOut}>
+              Sair do sistema
+            </button>
           </div>
         </Profile>
       </Content>

@@ -1,9 +1,9 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
-
-import api from '../../../services/api';
+import { toast } from 'react-toastify';
 import history from '../../../services/history';
+import api from '../../../services/api';
 
-import { signInSuccess } from './actions';
+import { signInSuccess, signInFailure } from './actions';
 
 export function* singIn({ payload }) {
   try {
@@ -16,12 +16,33 @@ export function* singIn({ payload }) {
 
     const { token, user } = response.data;
 
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+
     yield put(signInSuccess(token, user));
 
-    history.pushState('/deliveries');
+    history.push('/deliveries');
   } catch (error) {
-    console.tron.log(error);
+    toast.error('Falha na autenticação, verifique seus dados');
+    yield put(signInFailure());
   }
 }
 
-export default all([takeLatest('@auth/SIGN_IN_REQUEST', singIn)]);
+export function setToken({ payload }) {
+  if (!payload) return;
+
+  const { token } = payload.auth;
+
+  if (token) {
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+  }
+}
+
+export function singOut() {
+  history.push('/');
+}
+
+export default all([
+  takeLatest('persist/REHYDRATE', setToken),
+  takeLatest('@auth/SIGN_IN_REQUEST', singIn),
+  takeLatest('@auth/SIGN_OUT', singOut),
+]);

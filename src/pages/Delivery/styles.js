@@ -1,10 +1,11 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable no-nested-ternary */
 import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   padding: 0 120px;
   background: #f5f5f5;
 
@@ -38,7 +39,39 @@ export const Content = styled.div`
 `;
 
 export const OpSelect = styled.div`
-  width: 300px;
+  position: relative;
+
+  svg {
+    position: absolute;
+    top: 45%;
+    left: 20px;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    color: #999;
+  }
+  input {
+    width: 300px;
+    height: 32px;
+    border: 1px solid #ddd;
+    color: #444;
+    border-radius: 4px;
+    padding: 0 35px;
+  }
+`;
+
+export const Inicial = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  width: 35px;
+  font-size: 16px;
+  margin-right: 8px;
+  text-transform: uppercase;
+  border-radius: 50%;
+  background: rgba(${props => (props.cor ? `${props.cor},${0.12}` : '')});
+  color: rgba(${props => (props.cor ? `${props.cor},${0.8}` : '')});
 `;
 
 export const Table = styled.table`
@@ -76,16 +109,6 @@ export const Table = styled.table`
       td > div {
         display: flex;
         align-items: center;
-
-        img {
-          height: 35px;
-          width: 35px;
-          border-radius: 50%;
-        }
-
-        span {
-          margin-left: 8px;
-        }
       }
     }
   }
@@ -94,10 +117,10 @@ export const Table = styled.table`
 export const Status = styled.div`
   div {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     height: 25px;
     border-radius: 12px;
-    padding: 5px 15px;
+    padding: 5px 5px;
     background: ${props =>
       props.status === 'entregue'
         ? '#DFF0DF'
@@ -120,4 +143,38 @@ export const Status = styled.div`
         ? '#DE3B3B'
         : ''};
   }
+`;
+
+export const Div = styled.div`
+  button {
+    display: flex;
+    align-items: center;
+    border: 0;
+    background: none;
+
+    span {
+      padding-left: 5px;
+      color: #666;
+
+      &:hover {
+        color: #de3b3b;
+      }
+    }
+  }
+
+  .edit > span {
+    color: #666;
+
+    &:hover {
+      color: #4d85ee;
+    }
+  }
+
+  margin: 0 10px;
+  display: ${props => (props.none ? 'none' : 'flex')};
+
+  border-bottom: 1px solid #eee;
+  margin-bottom: 5px;
+
+  padding: 10px 5px;
 `;

@@ -5,8 +5,13 @@ export const Div = styled.div`
   align-items: center;
   cursor: pointer;
 
-  &:hover {
-    color: #8e5be8;
+  span {
+    padding-left: 5px;
+    color: #666;
+
+    &:hover {
+      color: #8e5be8;
+    }
   }
 `;
 

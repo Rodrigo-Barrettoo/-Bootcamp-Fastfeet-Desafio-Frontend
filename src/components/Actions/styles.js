@@ -59,14 +59,4 @@ export const ListActions = styled.div`
   }
 `;
 
-export const Div = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 0 10px;
-  display: ${props => (props.none ? 'none' : 'flex')};
-
-  border-bottom: 1px solid #eee;
-  margin-bottom: 5px;
-
-  padding: 10px 5px;
-`;
+export const Options = styled.div``;

@@ -1,13 +1,14 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
+import React, { useState } from 'react';
 import Modal from '@material-ui/core/Modal';
+import { format, parseISO } from 'date-fns';
 
 import { MdVisibility } from 'react-icons/md';
 
 import { Div, PositionModal } from './styles';
-import assinatura from '../../assets/images/assinatura.png';
 
-export default function SimpleModal() {
-  const [open, setOpen] = React.useState(false);
+export default function SimpleModal({ data }) {
+  const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -34,26 +35,35 @@ export default function SimpleModal() {
           <div>
             <strong>Informações da encomenda</strong>
             <p>
-              Rua Beethoven,
-              <br /> 1729 Diadema - SP <br /> 09960-580
+              {data.recipient.street}, {data.recipient.number}
+              <br /> {data.recipient.city} - {data.recipient.state}
+              <br /> Cep: {data.recipient.zipcode}
             </p>
           </div>
           <div>
             <strong>Datas</strong>
             <p>
               <strong>Retirada: </strong>
-              25/01/2020
+              {data.start_date !== null
+                ? format(parseISO(data.start_date), 'MM/dd/yyyy')
+                : 'Não retirada ainda'}
             </p>
             <p>
               <strong>Entrega: </strong>
-              25/01/2020
+              {data.end_date !== null
+                ? format(parseISO(data.end_date), 'MM/dd/yyyy')
+                : 'Processando...'}
             </p>
           </div>
 
           <div>
             <strong>Assinatura do destinatário</strong>
             <span className="spanImg">
-              <img src={assinatura} alt="" />
+              {data.signature ? (
+                <img src={data.signature.url} alt="Assinatura" />
+              ) : (
+                'Não assinou'
+              )}
             </span>
           </div>
         </PositionModal>
